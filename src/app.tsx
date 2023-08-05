@@ -1,10 +1,10 @@
 import { useComputed, useSignal } from "@preact/signals";
 import c from "classnames";
 import styles from "./app.module.css";
-import { Canvas } from "./components/canvas";
-import { PathSegment } from "./domain";
 import { useCanvasStore } from "./canvas-store";
-import { Step } from "./domain";
+import { Button } from "./components/button";
+import { Canvas } from "./components/canvas";
+import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 
 const canvasStore = useCanvasStore();
@@ -88,30 +88,33 @@ export function App() {
           />
           {strokeWidth.value.toString().padStart(2, "0")}
         </label>
-        <button
+        <Button
+          size="s"
           disabled={scratch.value.length === 0}
           onClick={() => (scratch.value = scratch.value.slice(0, -1))}
         >
           undo
-        </button>
-        <button onClick={() => (scratch.value = [])}>CLR</button>
+        </Button>
+        <Button size="s" onClick={() => (scratch.value = [])}>
+          CLR
+        </Button>
       </div>
       <footer>
         <nav>
-          <button
+          <Button
             disabled={isFirst.value}
             onClick={() => gotoStepIndex(currentStepIndex.value - 1)}
           >
             👈
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => {
               if (isLast.value) return gotoStepIndex(3);
               gotoStepIndex(currentStepIndex.value + 1);
             }}
           >
             👉🏼
-          </button>
+          </Button>
         </nav>
       </footer>
     </main>
