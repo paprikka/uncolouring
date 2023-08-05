@@ -2,7 +2,7 @@ import { signal, computed } from "@preact/signals-core";
 import { steps } from "./steps";
 
 export const useCanvasStore = () => {
-  const color = signal("#000000");
+  const color = signal("#1F44F5");
   const strokeWidth = signal(10);
   const currentStepIndex = signal(0);
   const allSteps = signal(steps);

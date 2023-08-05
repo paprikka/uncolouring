@@ -6,6 +6,7 @@ import { Button } from "./components/button";
 import { Canvas } from "./components/canvas";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
+import { ColorPicker } from "./components/color-picker";
 
 const canvasStore = useCanvasStore();
 export function App() {
@@ -67,13 +68,7 @@ export function App() {
       />
 
       <div class={styles.canvasTools}>
-        <input
-          type="color"
-          onInput={(e) => {
-            color.value = e.currentTarget.value;
-          }}
-          value={color.value}
-        />
+        <ColorPicker value={color} />
         <label>
           <input
             type="range"

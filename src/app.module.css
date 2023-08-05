@@ -86,10 +86,6 @@
 .app label.isVertical {
   rotate: -90deg;
 }
-.app input[type="color"] {
-  height: 2.5rem;
-  width: 4rem;
-}
 
 .canvasTools {
   position: absolute;
@@ -114,4 +110,15 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-weight: bold;
+}
+
+.app input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  background: red;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100rem;
+  background: var(--color-text);
+  cursor: pointer;
 }
