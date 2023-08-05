@@ -1,0 +1,31 @@
+:root {
+  font-family: Courier New, monospace;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+
+  --color-bg: white;
+  --color-text: black;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  touch-action: manipulation;
+}
+
+html,
+body {
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  inset: 0;
+}

@@ -1,0 +1,91 @@
+.app header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+}
+.app h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  line-height: 1;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.app footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+.app nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app button {
+  appearance: none;
+  border: 3px solid var(--color-text);
+  border-radius: 6px;
+  color: var(--color-text);
+  padding: 0 1ch;
+  line-height: 3ch;
+  font-family: inherit;
+  font-weight: 600;
+  background: none transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.1ch;
+  font-size: 1.5rem;
+}
+
+.app button:is(:hover, :active):not(:disabled) {
+  color: var(--color-bg);
+  background-color: var(--color-text);
+  cursor: pointer;
+}
+
+.app button:active {
+  scale: 0.95;
+}
+
+.app button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+.app main {
+  padding: 1rem;
+  position: absolute;
+  inset: 0;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr min-content;
+}
+
+.strokePreview {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 100rem;
+  backdrop-filter: blur(0.1rem);
+  mix-blend-mode: difference;
+  z-index: 100;
+  width: var(--w);
+  height: var(--w);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.2s opacity, 0.2s visibility;
+}
+
+.strokePreview.isVisible {
+  opacity: 1;
+  visibility: visible;
+}
