@@ -1,3 +1,5 @@
+import { VNode } from "preact";
+
 export type PathSegment = {
   id: number;
   points: number[][];
@@ -6,7 +8,7 @@ export type PathSegment = {
 };
 
 export type Step = {
-  title: string;
+  title: string | VNode | VNode[];
   pathSegments: PathSegment[];
   background: string;
 };

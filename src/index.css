@@ -1,5 +1,7 @@
 :root {
-  font-family: Courier New, monospace;
+  /* font-family: Courier New, monospace; */
+  font-family: Garamond, Baskerville, Baskerville Old Face, Hoefler Text,
+    Times New Roman, serif;
   line-height: 1.5;
   font-weight: 400;
 

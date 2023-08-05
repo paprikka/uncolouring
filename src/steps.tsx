@@ -18,17 +18,36 @@ import { useEffect } from "preact/hooks";
 
 export const steps: Step[] = [
   {
-    title: "Hi, it's the uncolouring book!\n (tap 👉🏼 to continue )",
+    title: (
+      <>
+        <h1>Hi, it's the uncolouring book!</h1>
+        <p>(tap 👉🏼 to continue )</p>
+      </>
+    ),
     pathSegments: [],
     background: img0,
   },
   {
-    title: "Add strokes to shapes to give them meaning. Use your imagination!",
+    title: (
+      <>
+        {/* <h1>Rules of the game</h1> */}
+        <ol>
+          <li>Add strokes to shapes to give them meaning.</li>
+          <li>Don't worry about skipping pictures. Find the one you like!</li>
+          <li>Use your imagination!</li>
+        </ol>
+      </>
+    ),
     pathSegments: [],
     background: img1,
   },
   {
-    title: "A cloud-filled sky. What fantastic creatures do you see here?",
+    title: (
+      <>
+        <h1>A cloud-filled sky</h1>
+        <p>What fantastic creatures lie within these clouds?</p>
+      </>
+    ),
     pathSegments: [],
     background: img2,
   },
@@ -45,7 +64,11 @@ export const steps: Step[] = [
     background: img10,
   },
   { title: "She doesn't love you", pathSegments: [], background: img11 },
-  { title: "Tell her", pathSegments: [], background: img12 },
+  {
+    title: "Tell her",
+    pathSegments: [],
+    background: img12,
+  },
   { title: "I said tell her", pathSegments: [], background: img13 },
 ];
 

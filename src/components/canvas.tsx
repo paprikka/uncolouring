@@ -5,9 +5,10 @@ import { PathSegment } from "../domain";
 import styles from "./canvas.module.css";
 import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
 import { useScreenSize } from "./use-screen-size";
+import { VNode } from "preact";
 
 type Props = {
-  title: string;
+  title: string | VNode | VNode[];
   color: string;
   strokeWidth: number;
   background: string;
@@ -84,7 +85,12 @@ export const Canvas = ({
             <path key={segment.id} d={path} fill={segment.color} />
           ))}
       </svg>
-      <p class={styles.title}>{title}</p>
+
+      <div class={styles.title} key={"title_" + background}>
+        <div class={styles.titleContent}>
+          {typeof title === "string" ? <h1>{title}</h1> : title}{" "}
+        </div>
+      </div>
     </div>
   );
 };

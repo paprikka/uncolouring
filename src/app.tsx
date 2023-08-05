@@ -82,16 +82,6 @@ export function App() {
           />
           {strokeWidth.value.toString().padStart(2, "0")}
         </label>
-        <Button
-          size="s"
-          disabled={scratch.value.length === 0}
-          onClick={() => (scratch.value = scratch.value.slice(0, -1))}
-        >
-          undo
-        </Button>
-        <Button size="s" onClick={() => (scratch.value = [])}>
-          CLR
-        </Button>
       </div>
       <footer>
         <nav>
@@ -100,6 +90,16 @@ export function App() {
             onClick={() => gotoStepIndex(currentStepIndex.value - 1)}
           >
             👈
+          </Button>
+          <Button
+            size="s"
+            disabled={scratch.value.length === 0}
+            onClick={() => (scratch.value = scratch.value.slice(0, -1))}
+          >
+            undo
+          </Button>
+          <Button size="s" onClick={() => (scratch.value = [])}>
+            CLR
           </Button>
           <Button
             onClick={() => {

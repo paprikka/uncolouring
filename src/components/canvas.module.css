@@ -11,15 +11,41 @@
 
 .title {
   position: absolute;
-  top: 1.5rem;
-  width: 100%;
+  top: 2rem;
+  left: 1.5rem;
+  right: 1.5rem;
   text-align: center;
-  font-size: 2rem;
-  line-height: 1.2;
-  font-weight: 600;
   pointer-events: none;
   z-index: var(--layer-canvas);
-  padding: 0 2rem;
+
+  animation: fadeIn 0.7s 0.1s ease-in-out both;
+}
+
+.titleContent {
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.title h1 {
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.title p,
+.title ol {
+  --c: rgba(255, 255, 255, 0.3);
+  font-size: 1.25rem;
+  background: var(--c);
+  box-shadow: 0 0 1rem 0.2rem var(--c);
+}
+
+.title ol {
+  text-align: start;
+  padding: 0;
 }
 
 .background {
