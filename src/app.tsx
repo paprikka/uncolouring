@@ -43,7 +43,10 @@ export function App() {
   return (
     <main class={styles.app}>
       <header>
-        <h1>Uncolouring book</h1>
+        {/* <h1>Uncolouring book</h1> */}
+        <a href="https://sonnet.io/" target="_blank">
+          🐐
+        </a>
       </header>
       <Canvas
         color={color.value}
