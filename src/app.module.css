@@ -132,13 +132,17 @@
   /* width: 80vh; */
   transform-origin: top left;
 
-  translate: 0 80vh;
+  translate: 0 75vh;
   rotate: -90deg;
   z-index: var(--layer-nav);
 
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+
+.canvasTools button {
+  font-size: 1rem;
 }
 
 .app label {

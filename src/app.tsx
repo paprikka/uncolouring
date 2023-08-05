@@ -92,7 +92,7 @@ export function App() {
         >
           undo
         </button>
-        <button onClick={() => (scratch.value = [])}>Clear</button>
+        <button onClick={() => (scratch.value = [])}>CLR</button>
       </div>
       <footer>
         <nav>
