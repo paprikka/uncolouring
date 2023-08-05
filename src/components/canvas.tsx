@@ -10,10 +10,17 @@ type Props = {
   title: string;
   color: string;
   strokeWidth: number;
+  background: string;
   output: Signal<PathSegment[]>;
 };
 
-export const Canvas = ({ title, color, output, strokeWidth }: Props) => {
+export const Canvas = ({
+  title,
+  color,
+  output,
+  strokeWidth,
+  background,
+}: Props) => {
   const rect = useScreenSize();
 
   const onDown = (e: PointerEvent) => {
@@ -56,12 +63,20 @@ export const Canvas = ({ title, color, output, strokeWidth }: Props) => {
 
   return (
     <div class={styles.canvas}>
+      {background ? (
+        <div
+          key={background}
+          className={styles.background}
+          style={{ backgroundImage: `url(${background})` }}
+        />
+      ) : null}
       <svg
         width={rect.value.width}
         height={rect.value.height}
         onPointerDown={onDown}
         onPointerMove={onMove}
         xmlns="http://www.w3.org/2000/svg"
+        key={background}
       >
         {allSVGPaths.value
           .filter((svgPath) => svgPath.segment.points.length > 1)

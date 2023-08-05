@@ -8,6 +8,11 @@
   --color-bg: white;
   --color-text: black;
 
+  --layer-bg: 1;
+  --layer-canvas: 2;
+  --layer-nav: 10;
+  --layer-overlay: 100;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

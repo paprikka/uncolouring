@@ -6,6 +6,7 @@
   align-self: center;
   justify-self: center;
   touch-action: none;
+  z-index: var(--layer-canvas);
 }
 
 .title {
@@ -16,4 +17,32 @@
   font-size: 1.5rem;
   font-weight: 600;
   pointer-events: none;
+  z-index: var(--layer-canvas);
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 1;
+
+  animation: fadeIn 0.4s 0s ease-in-out both;
+}
+
+.canvas svg {
+  position: relative;
+  z-index: 2;
+  animation: fadeIn 0.8s 0.3s ease-in-out both;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

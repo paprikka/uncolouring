@@ -13,6 +13,10 @@ export function App() {
   const { isFirst, isLast, currentStepIndex, strokeWidth, color, allSteps } =
     canvasStore;
 
+  const currentBackground = useComputed(
+    () => allSteps.value[currentStepIndex.value].background
+  );
+
   const currentTitle = useComputed(
     () => allSteps.value[currentStepIndex.value].title
   );
@@ -46,6 +50,7 @@ export function App() {
         strokeWidth={strokeWidth.value}
         output={scratch}
         title={currentTitle.value}
+        background={currentBackground.value}
       />
 
       <div
@@ -53,7 +58,7 @@ export function App() {
           [styles.strokePreview]: true,
           [styles.isVisible]: previewVisible.value,
         })}
-        style={`--w: ${strokeWidth.value}px`}
+        style={`--w: ${strokeWidth}px`}
       />
       <footer>
         <nav>
@@ -63,24 +68,36 @@ export function App() {
           >
             👈
           </button>
-          <input
-            type="color"
-            onInput={(e) => {
-              color.value = e.currentTarget.value + "99";
-            }}
-            value={color.value}
-          />
-          <input
-            type="range"
-            min="5"
-            max="70"
-            onPointerDown={() => (previewVisible.value = true)}
-            onPointerUp={() => (previewVisible.value = false)}
-            onInput={(e) =>
-              (strokeWidth.value = parseInt(e.currentTarget.value, 10))
-            }
-          />
-
+          <div class={styles.canvasTools}>
+            <input
+              type="color"
+              onInput={(e) => {
+                color.value = e.currentTarget.value + "99";
+              }}
+              value={color.value}
+            />
+            <label>
+              <input
+                type="range"
+                min="5"
+                max="70"
+                value={strokeWidth.value}
+                onPointerDown={() => (previewVisible.value = true)}
+                onPointerUp={() => (previewVisible.value = false)}
+                onInput={(e) =>
+                  (strokeWidth.value = parseInt(e.currentTarget.value, 10))
+                }
+              />
+              {strokeWidth.value.toString().padStart(2, "0")}
+            </label>
+            <button
+              disabled={scratch.value.length === 0}
+              onClick={() => (scratch.value = scratch.value.slice(0, -1))}
+            >
+              undo
+            </button>
+            <button onClick={() => (scratch.value = [])}>Clear</button>
+          </div>
           <button
             disabled={isLast}
             onClick={() => gotoStepIndex(currentStepIndex.value + 1)}

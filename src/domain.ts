@@ -8,6 +8,7 @@ export type PathSegment = {
 export type Step = {
   title: string;
   pathSegments: PathSegment[];
+  background: string;
 };
 
 export type WithTarget<Event, Target> = Event & { currentTarget: Target };

@@ -4,7 +4,13 @@
   left: 0;
   right: 0;
   padding: 1rem;
+  z-index: var(--layer-nav);
 }
+
+.app footer {
+  z-index: var(--layer-nav);
+}
+
 .app h1 {
   margin: 0;
   padding: 0;
@@ -25,6 +31,7 @@
 .app nav {
   width: 100%;
   display: flex;
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
 }
@@ -41,7 +48,7 @@
   background: none transparent;
   text-transform: uppercase;
   letter-spacing: 0.1ch;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .app button:is(:hover, :active):not(:disabled) {
@@ -77,7 +84,7 @@
   border-radius: 100rem;
   backdrop-filter: blur(0.1rem);
   mix-blend-mode: difference;
-  z-index: 100;
+  z-index: var(--layer-overlay);
   width: var(--w);
   height: var(--w);
   visibility: hidden;
@@ -88,4 +95,25 @@
 .strokePreview.isVisible {
   opacity: 1;
   visibility: visible;
+}
+
+.app input[type="color"] {
+  height: 2.5rem;
+  width: 4rem;
+}
+
+.canvasTools {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 0 0.5rem rgba(0, 0, 0, 0.04);
+  border-radius: 0.25rem;
+}
+
+.app label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
