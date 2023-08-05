@@ -10,7 +10,7 @@ export type PathSegment = {
 export type Step = {
   title: string | VNode | VNode[];
   pathSegments: PathSegment[];
-  background: string;
+  background?: string;
 };
 
 export type WithTarget<Event, Target> = Event & { currentTarget: Target };

@@ -45,7 +45,6 @@ export function App() {
   return (
     <main class={styles.app}>
       <header>
-        {/* <h1>Uncolouring book</h1> */}
         <a href="https://sonnet.io/" target="_blank">
           🐐
         </a>
@@ -56,6 +55,7 @@ export function App() {
         output={scratch}
         title={currentTitle.value}
         background={currentBackground.value}
+        stepIndex={currentStepIndex.value}
       />
 
       <div

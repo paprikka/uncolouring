@@ -2,6 +2,7 @@ import { Step } from "./domain";
 
 import img0 from "./assets/img_0.webp";
 import img1 from "./assets/img_1.webp";
+import img1empty from "./assets/img_1_empty.webp";
 import img2 from "./assets/img_2.webp";
 import img3 from "./assets/img_3.webp";
 import img4 from "./assets/img_4.webp";
@@ -20,7 +21,7 @@ export const steps: Step[] = [
   {
     title: (
       <>
-        <h1>Hi, it's the uncolouring book!</h1>
+        <h1>Hi, this is the Uncolouring Book!</h1>
         <p>(tap 👉🏼 to continue )</p>
       </>
     ),
@@ -30,12 +31,25 @@ export const steps: Step[] = [
   {
     title: (
       <>
-        {/* <h1>Rules of the game</h1> */}
+        <h1>Rules of the game</h1>
         <ol>
           <li>Add strokes to shapes to give them meaning.</li>
-          <li>Don't worry about skipping pictures. Find the one you like!</li>
-          <li>Use your imagination!</li>
+          <li>You can draw with your fingers or mouse.</li>
+          <li>
+            Don't worry about skipping pictures. Hit 👉🏼 to find the one you
+            like!
+          </li>
+          <li>...and most importantly...</li>
         </ol>
+      </>
+    ),
+    pathSegments: [],
+    background: img1empty,
+  },
+  {
+    title: (
+      <>
+        <h1>Use your imagination!</h1>
       </>
     ),
     pathSegments: [],
@@ -74,14 +88,16 @@ export const steps: Step[] = [
 
 export const usePreloadSteps = () => {
   useEffect(() => {
-    const preloadLinks = steps.map((step) => {
-      const el = document.createElement("link");
-      el.rel = "preload";
-      el.href = step.background;
-      el.as = "image";
-      el.classList.add("uncolouring-book-preload");
-      return el;
-    });
+    const preloadLinks = steps
+      .filter((step) => !!step.background)
+      .map((step) => {
+        const el = document.createElement("link");
+        el.rel = "preload";
+        el.href = step.background!;
+        el.as = "image";
+        el.classList.add("uncolouring-book-preload");
+        return el;
+      });
 
     document.head.append(...preloadLinks);
 

@@ -11,8 +11,9 @@ type Props = {
   title: string | VNode | VNode[];
   color: string;
   strokeWidth: number;
-  background: string;
+  background?: string;
   output: Signal<PathSegment[]>;
+  stepIndex: number;
 };
 
 export const Canvas = ({
@@ -21,6 +22,7 @@ export const Canvas = ({
   output,
   strokeWidth,
   background,
+  stepIndex,
 }: Props) => {
   const rect = useScreenSize();
 
@@ -66,7 +68,7 @@ export const Canvas = ({
     <div class={styles.canvas}>
       {background ? (
         <div
-          key={"canvas_" + background}
+          key={`background_${stepIndex}_${background}`}
           className={styles.background}
           style={{ backgroundImage: `url(${background})` }}
         />
@@ -77,7 +79,7 @@ export const Canvas = ({
         onPointerDown={onDown}
         onPointerMove={onMove}
         xmlns="http://www.w3.org/2000/svg"
-        key={background}
+        key={`canvas_${stepIndex}_${background}`}
       >
         {allSVGPaths.value
           .filter((svgPath) => svgPath.segment.points.length > 1)
@@ -86,7 +88,7 @@ export const Canvas = ({
           ))}
       </svg>
 
-      <div class={styles.title} key={"title_" + background}>
+      <div class={styles.title} key={`title_${stepIndex}_${background}`}>
         <div class={styles.titleContent}>
           {typeof title === "string" ? <h1>{title}</h1> : title}{" "}
         </div>

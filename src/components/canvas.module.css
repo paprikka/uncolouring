@@ -17,6 +17,10 @@
   text-align: center;
   pointer-events: none;
   z-index: var(--layer-canvas);
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   animation: fadeIn 0.7s 0.1s ease-in-out both;
 }
@@ -26,6 +30,10 @@
   max-width: 40rem;
   margin: 0 auto;
   padding: 1rem;
+
+  --c: rgba(255, 255, 255, 0.4);
+  background: var(--c);
+  box-shadow: 0 0 0.3rem 0.2rem var(--c);
 }
 
 .title h1 {
@@ -37,10 +45,7 @@
 
 .title p,
 .title ol {
-  --c: rgba(255, 255, 255, 0.3);
   font-size: 1.25rem;
-  background: var(--c);
-  box-shadow: 0 0 1rem 0.2rem var(--c);
 }
 
 .title ol {
