@@ -1,19 +1,40 @@
-import { useMemo, useState } from "preact/hooks";
-import styles from "./app.module.css";
-import { steps } from "./steps";
+import { useComputed, useSignal } from "@preact/signals";
 import c from "classnames";
+import styles from "./app.module.css";
 import { Canvas } from "./components/canvas";
+import { PathSegment } from "./domain";
+import { useCanvasStore } from "./canvas-store";
+import { Step } from "./domain";
 
+const canvasStore = useCanvasStore();
 export function App() {
-  const [color, setColor] = useState("#000000");
-  const [strokeWidth, setStrokeWidth] = useState(10);
-  const [previewVisible, setPreviewVisible] = useState(false);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const previewVisible = useSignal(false);
 
-  const currentStep = useMemo(
-    () => steps[currentStepIndex],
-    [currentStepIndex]
+  const { isFirst, isLast, currentStepIndex, strokeWidth, color, allSteps } =
+    canvasStore;
+
+  const currentTitle = useComputed(
+    () => allSteps.value[currentStepIndex.value].title
   );
+
+  const scratch = useSignal<PathSegment[]>([]);
+
+  const gotoStepIndex = (index: number) => {
+    if (index < 0 || index > allSteps.value.length - 1) return;
+
+    // save current scratch
+    const updatedAllSteps: Step[] = allSteps.value.map((step, index) => {
+      if (index !== currentStepIndex.value) return step;
+      return { ...step, pathSegments: scratch.value };
+    });
+
+    allSteps.value = updatedAllSteps;
+
+    currentStepIndex.value = index;
+
+    // load new scratch
+    scratch.value = allSteps.value[index].pathSegments;
+  };
 
   return (
     <main class={styles.app}>
@@ -21,45 +42,48 @@ export function App() {
         <h1>Uncolouring book</h1>
       </header>
       <Canvas
-        title={currentStep.title}
-        color={color}
-        strokeWidth={strokeWidth}
+        color={color.value}
+        strokeWidth={strokeWidth.value}
+        output={scratch}
+        title={currentTitle.value}
       />
 
       <div
         class={c({
           [styles.strokePreview]: true,
-          [styles.isVisible]: previewVisible,
+          [styles.isVisible]: previewVisible.value,
         })}
-        style={`--w: ${strokeWidth}px`}
+        style={`--w: ${strokeWidth.value}px`}
       />
       <footer>
         <nav>
           <button
-            disabled={!currentStepIndex}
-            onClick={() => setCurrentStepIndex(currentStepIndex - 1)}
+            disabled={isFirst}
+            onClick={() => gotoStepIndex(currentStepIndex.value - 1)}
           >
             👈
           </button>
           <input
             type="color"
-            onChange={(e) => {
-              setColor(e.currentTarget.value);
+            onInput={(e) => {
+              color.value = e.currentTarget.value + "99";
             }}
-            value={color}
+            value={color.value}
           />
           <input
             type="range"
             min="5"
             max="70"
-            onPointerDown={() => setPreviewVisible(true)}
-            onPointerUp={() => setPreviewVisible(false)}
-            onInput={(e) => setStrokeWidth(parseInt(e.currentTarget.value, 10))}
+            onPointerDown={() => (previewVisible.value = true)}
+            onPointerUp={() => (previewVisible.value = false)}
+            onInput={(e) =>
+              (strokeWidth.value = parseInt(e.currentTarget.value, 10))
+            }
           />
 
           <button
-            disabled={currentStepIndex === steps.length - 1}
-            onClick={() => setCurrentStepIndex(currentStepIndex + 1)}
+            disabled={isLast}
+            onClick={() => gotoStepIndex(currentStepIndex.value + 1)}
           >
             👉🏼
           </button>

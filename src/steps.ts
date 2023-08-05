@@ -1,9 +1,6 @@
-import { PathSegment } from "./domain";
+import { Step } from "./domain";
 
-export const steps: {
-  title: string;
-  pathSegments: PathSegment[];
-}[] = [
+export const steps: Step[] = [
   {
     title: "first",
     pathSegments: [],

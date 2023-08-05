@@ -5,4 +5,9 @@ export type PathSegment = {
   strokeWidth: number;
 };
 
+export type Step = {
+  title: string;
+  pathSegments: PathSegment[];
+};
+
 export type WithTarget<Event, Target> = Event & { currentTarget: Target };

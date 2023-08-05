@@ -1,37 +1,31 @@
+import { useComputed } from "@preact/signals";
+import type { Signal } from "@preact/signals-core";
+import { getStroke } from "perfect-freehand";
 import { PathSegment } from "../domain";
 import styles from "./canvas.module.css";
-import { useSignal, useComputed } from "@preact/signals";
 import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
-import { getStroke } from "perfect-freehand";
-import { useEffect } from "preact/hooks";
+import { useScreenSize } from "./use-screen-size";
 
-type Props = { title: string; color: string; strokeWidth: number };
+type Props = {
+  title: string;
+  color: string;
+  strokeWidth: number;
+  output: Signal<PathSegment[]>;
+};
 
-export const Canvas = ({ title, color, strokeWidth }: Props) => {
-  const rect = useSignal(document.documentElement.getBoundingClientRect());
-  useEffect(() => {
-    const onResize = () => {
-      rect.value = document.documentElement.getBoundingClientRect();
-    };
-
-    addEventListener("resize", onResize);
-
-    return () => {
-      removeEventListener("resize", onResize);
-    };
-  }, []);
-  const pathSegments = useSignal<PathSegment[]>([]);
+export const Canvas = ({ title, color, output, strokeWidth }: Props) => {
+  const rect = useScreenSize();
 
   const onDown = (e: PointerEvent) => {
     (e.target as SVGElement).setPointerCapture(e.pointerId);
 
-    pathSegments.value = [
-      ...pathSegments.value,
+    output.value = [
+      ...output.value,
       {
         id: Date.now(),
-        color,
+        color: color,
         points: [[e.clientX, e.clientY]],
-        strokeWidth,
+        strokeWidth: strokeWidth,
       },
     ];
   };
@@ -39,15 +33,15 @@ export const Canvas = ({ title, color, strokeWidth }: Props) => {
   const onMove = (e: PointerEvent) => {
     if (e.buttons !== 1) return;
 
-    const lastSegment = pathSegments.value[pathSegments.value.length - 1];
+    const lastSegment = output.value[output.value.length - 1];
     if (!lastSegment) return;
 
     lastSegment.points = [...lastSegment.points, [e.clientX, e.clientY]];
-    pathSegments.value = [...pathSegments.value.slice(0, -1), lastSegment];
+    output.value = [...output.value.slice(0, -1), lastSegment];
   };
 
   const allSVGPaths = useComputed(() => {
-    return pathSegments.value.map((segment) => {
+    return output.value.map((segment) => {
       const stroke = getStroke(segment.points, {
         thinning: 0.7,
         streamline: 0.2,
@@ -60,8 +54,6 @@ export const Canvas = ({ title, color, strokeWidth }: Props) => {
     });
   });
 
-  // TODO : remove
-
   return (
     <div class={styles.canvas}>
       <svg
@@ -73,12 +65,8 @@ export const Canvas = ({ title, color, strokeWidth }: Props) => {
       >
         {allSVGPaths.value
           .filter((svgPath) => svgPath.segment.points.length > 1)
-          .map((svgPath) => (
-            <path
-              key={svgPath.segment.id}
-              d={svgPath.path}
-              fill={svgPath.segment.color}
-            />
+          .map(({ segment, path }) => (
+            <path key={segment.id} d={path} fill={segment.color} />
           ))}
       </svg>
       <p class={styles.title}>{title}</p>
