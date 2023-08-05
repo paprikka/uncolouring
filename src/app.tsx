@@ -5,9 +5,11 @@ import { Canvas } from "./components/canvas";
 import { PathSegment } from "./domain";
 import { useCanvasStore } from "./canvas-store";
 import { Step } from "./domain";
+import { usePlomk } from "./plomk";
 
 const canvasStore = useCanvasStore();
 export function App() {
+  usePlomk();
   const previewVisible = useSignal(false);
 
   const { isFirst, isLast, currentStepIndex, strokeWidth, color, allSteps } =
