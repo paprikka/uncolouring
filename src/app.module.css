@@ -132,7 +132,7 @@
   /* width: 80vh; */
   transform-origin: top left;
 
-  translate: 0 75vh;
+  translate: 0 70vh;
   rotate: -90deg;
   z-index: var(--layer-nav);
 

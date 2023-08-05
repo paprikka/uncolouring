@@ -16,13 +16,21 @@ import img12 from "./assets/mother.png";
 import img13 from "./assets/last.jpeg";
 
 export const steps: Step[] = [
-  { title: "The uncolouring book", pathSegments: [], background: img0 },
   {
-    title: "Add strokes to shapes to give them meaning",
+    title: "Hi, it's the uncolouring book!\n (tap 👉🏼 to continue )",
+    pathSegments: [],
+    background: img0,
+  },
+  {
+    title: "Add strokes to shapes to give them meaning. Use your imagination!",
     pathSegments: [],
     background: img1,
   },
-  { title: "A cloud-filled sky", pathSegments: [], background: img2 },
+  {
+    title: "A cloud-filled sky. What fantastic creatures do you see here?",
+    pathSegments: [],
+    background: img2,
+  },
   { title: "Sun", pathSegments: [], background: img3 },
   { title: "Banana", pathSegments: [], background: img4 },
   { title: "Cucumber", pathSegments: [], background: img5 },
