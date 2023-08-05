@@ -14,6 +14,7 @@ import img10 from "./assets/img_10.webp";
 import img11 from "./assets/not-mother.jpeg";
 import img12 from "./assets/mother.png";
 import img13 from "./assets/last.jpeg";
+import { useEffect } from "preact/hooks";
 
 export const steps: Step[] = [
   {
@@ -47,3 +48,24 @@ export const steps: Step[] = [
   { title: "Tell her", pathSegments: [], background: img12 },
   { title: "I said tell her", pathSegments: [], background: img13 },
 ];
+
+export const usePreloadSteps = () => {
+  useEffect(() => {
+    const preloadLinks = steps.map((step) => {
+      const el = document.createElement("link");
+      el.rel = "preload";
+      el.href = step.background;
+      el.as = "image";
+      el.classList.add("uncolouring-book-preload");
+      return el;
+    });
+
+    document.head.append(...preloadLinks);
+
+    return () => {
+      document.head
+        .querySelectorAll(".uncolouring-book-preload")
+        .forEach((el) => el.remove());
+    };
+  }, []);
+};

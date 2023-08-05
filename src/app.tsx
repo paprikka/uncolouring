@@ -7,23 +7,21 @@ import { Canvas } from "./components/canvas";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 import { ColorPicker } from "./components/color-picker";
+import { usePreloadSteps } from "./steps";
 
 const canvasStore = useCanvasStore();
 export function App() {
   usePlomk();
+  usePreloadSteps();
   const previewVisible = useSignal(false);
-
   const { isFirst, isLast, currentStepIndex, strokeWidth, color, allSteps } =
     canvasStore;
-
   const currentBackground = useComputed(
     () => allSteps.value[currentStepIndex.value].background
   );
-
   const currentTitle = useComputed(
     () => allSteps.value[currentStepIndex.value].title
   );
-
   const scratch = useSignal<PathSegment[]>([]);
 
   const gotoStepIndex = (index: number) => {
@@ -37,6 +35,7 @@ export function App() {
 
     allSteps.value = updatedAllSteps;
 
+    // goto
     currentStepIndex.value = index;
 
     // load new scratch
