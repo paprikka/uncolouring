@@ -68,7 +68,7 @@ export function App() {
         <input
           type="color"
           onInput={(e) => {
-            color.value = e.currentTarget.value + "99";
+            color.value = e.currentTarget.value;
           }}
           value={color.value}
         />
