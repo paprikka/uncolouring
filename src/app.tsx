@@ -1,7 +1,8 @@
-import { useState } from "preact/hooks";
+import { useMemo, useState } from "preact/hooks";
 import styles from "./app.module.css";
 import { steps } from "./steps";
 import c from "classnames";
+import { Canvas } from "./components/canvas";
 
 export function App() {
   const [color, setColor] = useState("#000000");
@@ -9,14 +10,21 @@ export function App() {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  const [currentStep, setCurrentStep] = useState(steps[0]);
+  const currentStep = useMemo(
+    () => steps[currentStepIndex],
+    [currentStepIndex]
+  );
 
   return (
     <main class={styles.app}>
       <header>
         <h1>Uncolouring book</h1>
       </header>
-      {/* <Canvas title={currentStep.title} {color} {strokeWidth} /> */}
+      <Canvas
+        title={currentStep.title}
+        color={color}
+        strokeWidth={strokeWidth}
+      />
 
       <div
         class={c({
