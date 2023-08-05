@@ -65,7 +65,7 @@ export const Canvas = ({
     <div class={styles.canvas}>
       {background ? (
         <div
-          key={background}
+          key={"canvas_" + background}
           className={styles.background}
           style={{ backgroundImage: `url(${background})` }}
         />

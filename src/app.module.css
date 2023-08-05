@@ -65,7 +65,7 @@
   background: none transparent;
   text-transform: uppercase;
   letter-spacing: 0.1ch;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .app button:is(:hover, :active):not(:disabled) {
@@ -114,19 +114,31 @@
   visibility: visible;
 }
 
+.app label.isVertical {
+  rotate: -90deg;
+}
 .app input[type="color"] {
   height: 2.5rem;
   width: 4rem;
 }
 
 .canvasTools {
+  position: absolute;
+  left: 1rem;
+  top: 3rem;
+
+  bottom: 3rem;
+  height: 3rem;
+  /* width: 80vh; */
+  transform-origin: top left;
+
+  translate: 0 80vh;
+  rotate: -90deg;
+  z-index: var(--layer-nav);
+
   display: flex;
   gap: 1rem;
   align-items: center;
-
-  background: rgba(0, 0, 0, 0.04);
-  box-shadow: 0 0 0 0.5rem rgba(0, 0, 0, 0.04);
-  border-radius: 0.25rem;
 }
 
 .app label {
