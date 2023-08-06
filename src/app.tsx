@@ -99,7 +99,11 @@ export function App() {
           >
             undo
           </Button>
-          <Button size="s" onClick={() => (scratch.value = [])}>
+          <Button
+            size="s"
+            disabled={scratch.value.length === 0}
+            onClick={() => (scratch.value = [])}
+          >
             clear
           </Button>
           <Button
