@@ -53,7 +53,6 @@ type PlayerAPI = {
 export const usePlomk = () => {
   const playerRef = useRef<PlayerAPI | null>(null);
 
-  console.log("Plomk: Initializing");
   async function plomkNow() {
     if (!playerRef.current) return;
     console.log("Plomk: Playing");
