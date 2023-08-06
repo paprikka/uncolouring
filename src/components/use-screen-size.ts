@@ -1,11 +1,21 @@
 import { useEffect } from "preact/hooks";
 import { useSignal } from "@preact/signals";
+import { Ref } from "preact/hooks";
 
-export const useScreenSize = () => {
-  const rect = useSignal(document.documentElement.getBoundingClientRect());
+export const useScreenSize = (element: Ref<SVGSVGElement>) => {
+  const offsets = useSignal({
+    offsetX: 0,
+    offsetY: 0,
+  });
+
   useEffect(() => {
     const onResize = () => {
-      rect.value = document.documentElement.getBoundingClientRect();
+      if (!element?.current) return;
+      const rect = element.current.getBoundingClientRect();
+      offsets.value = {
+        offsetX: rect.left,
+        offsetY: rect.top,
+      };
     };
 
     addEventListener("resize", onResize);
@@ -19,5 +29,5 @@ export const useScreenSize = () => {
     };
   }, []);
 
-  return rect;
+  return offsets;
 };

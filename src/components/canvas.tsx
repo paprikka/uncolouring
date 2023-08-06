@@ -1,11 +1,12 @@
 import { useComputed } from "@preact/signals";
 import type { Signal } from "@preact/signals-core";
 import { getStroke } from "perfect-freehand";
+import { VNode } from "preact";
+import { useRef } from "preact/hooks";
 import { PathSegment } from "../domain";
 import styles from "./canvas.module.css";
 import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
 import { useScreenSize } from "./use-screen-size";
-import { VNode } from "preact";
 
 type Props = {
   title: string | VNode | VNode[];
@@ -24,17 +25,16 @@ export const Canvas = ({
   background,
   stepIndex,
 }: Props) => {
-  const rect = useScreenSize();
-
   const onDown = (e: PointerEvent) => {
     (e.target as SVGElement).setPointerCapture(e.pointerId);
 
+    const { offsetX, offsetY } = canvasOffsets.value;
     output.value = [
       ...output.value,
       {
         id: Date.now(),
         color: color,
-        points: [[e.clientX, e.clientY]],
+        points: [[e.clientX - offsetX, e.clientY - offsetY]],
         strokeWidth: strokeWidth,
       },
     ];
@@ -46,7 +46,12 @@ export const Canvas = ({
     const lastSegment = output.value[output.value.length - 1];
     if (!lastSegment) return;
 
-    lastSegment.points = [...lastSegment.points, [e.clientX, e.clientY]];
+    const { offsetX, offsetY } = canvasOffsets.value;
+
+    lastSegment.points = [
+      ...lastSegment.points,
+      [e.clientX - offsetX, e.clientY - offsetY],
+    ];
     output.value = [...output.value.slice(0, -1), lastSegment];
   };
 
@@ -64,6 +69,11 @@ export const Canvas = ({
     });
   });
 
+  const canvasWidth = 10000;
+  const canvasHeight = 10000;
+  const canvasElement = useRef<SVGSVGElement>(null);
+  const canvasOffsets = useScreenSize(canvasElement);
+
   return (
     <div class={styles.canvas}>
       {background ? (
@@ -74,8 +84,9 @@ export const Canvas = ({
         />
       ) : null}
       <svg
-        width={rect.value.width}
-        height={rect.value.height}
+        ref={canvasElement}
+        width={canvasWidth}
+        height={canvasHeight}
         onPointerDown={onDown}
         onPointerMove={onMove}
         xmlns="http://www.w3.org/2000/svg"
