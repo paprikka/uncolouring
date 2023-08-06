@@ -82,7 +82,7 @@ export const Canvas = ({
         key={`canvas_${stepIndex}_${background}`}
       >
         {allSVGPaths.value
-          .filter((svgPath) => svgPath.segment.points.length > 1)
+          .filter((svgPath) => svgPath.segment.points.length)
           .map(({ segment, path }) => (
             <path key={segment.id} d={path} fill={segment.color} />
           ))}
