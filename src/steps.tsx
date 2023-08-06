@@ -2,6 +2,7 @@ import { Step } from "./domain";
 
 import img0 from "./assets/img_0.webp";
 import img1 from "./assets/img_1.webp";
+import img10 from "./assets/img_10.webp";
 import img1empty from "./assets/img_1_empty.webp";
 import img2 from "./assets/img_2.webp";
 import img3 from "./assets/img_3.webp";
@@ -11,11 +12,9 @@ import img6 from "./assets/img_6.webp";
 import img7 from "./assets/img_7.webp";
 import img8 from "./assets/img_8.webp";
 import img9 from "./assets/img_9.webp";
-import img10 from "./assets/img_10.webp";
-import img11 from "./assets/not-mother.jpeg";
-import img12 from "./assets/mother.png";
 import img13 from "./assets/last.jpeg";
-import { useEffect } from "preact/hooks";
+import img12 from "./assets/mother.png";
+import img11 from "./assets/not-mother.jpeg";
 
 export const steps: Step[] = [
   {
@@ -26,7 +25,10 @@ export const steps: Step[] = [
       </>
     ),
     pathSegments: [],
-    background: img0,
+    background: {
+      src: img0,
+      size: [2480, 3508],
+    },
   },
   {
     title: (
@@ -44,7 +46,10 @@ export const steps: Step[] = [
       </>
     ),
     pathSegments: [],
-    background: img1empty,
+    background: {
+      src: img1empty,
+      size: [2480, 3508],
+    },
   },
   {
     title: (
@@ -53,7 +58,10 @@ export const steps: Step[] = [
       </>
     ),
     pathSegments: [],
-    background: img1,
+    background: {
+      src: img1,
+      size: [2480, 3508],
+    },
   },
   {
     title: (
@@ -63,48 +71,88 @@ export const steps: Step[] = [
       </>
     ),
     pathSegments: [],
-    background: img2,
+    background: {
+      src: img2,
+      size: [2480, 3508],
+    },
   },
-  { title: "Sun", pathSegments: [], background: img3 },
-  { title: "Banana", pathSegments: [], background: img4 },
-  { title: "Cucumber", pathSegments: [], background: img5 },
-  { title: "pickle", pathSegments: [], background: img6 },
-  { title: "Pickle", pathSegments: [], background: img7 },
-  { title: "Pickle III", pathSegments: [], background: img8 },
-  { title: "Mother", pathSegments: [], background: img9 },
+  {
+    title: "Sun",
+    pathSegments: [],
+    background: {
+      src: img3,
+      size: [2480, 3508],
+    },
+  },
+  {
+    title: "Banana",
+    pathSegments: [],
+    background: {
+      src: img4,
+      size: [2480, 3508],
+    },
+  },
+  {
+    title: "Cucumber",
+    pathSegments: [],
+    background: {
+      src: img5,
+      size: [2480, 3508],
+    },
+  },
+  {
+    title: "pickle",
+    pathSegments: [],
+    background: {
+      src: img6,
+      size: [2480, 3508],
+    },
+  },
+  {
+    title: "Pickle",
+    pathSegments: [],
+    background: {
+      src: img7,
+      size: [2480, 3508],
+    },
+  },
+  {
+    title: "Pickle III",
+    pathSegments: [],
+    background: {
+      src: img8,
+      size: [2480, 3508],
+    },
+  },
+  {
+    title: "Mother",
+    pathSegments: [],
+    background: {
+      src: img9,
+      size: [2480, 3508],
+    },
+  },
   {
     title: "Two people in Westfield carrying black balloons",
     pathSegments: [],
-    background: img10,
+    background: {
+      src: img10,
+      size: [2480, 3508],
+    },
   },
-  { title: "She doesn't love you", pathSegments: [], background: img11 },
+  {
+    title: "She doesn't love you",
+    pathSegments: [],
+    background: { src: img11, size: [612, 421] },
+  },
   {
     title: "Tell her",
     pathSegments: [],
-    background: img12,
+    background: { src: img12, size: [860, 927] },
   },
-  { title: "I said tell her", pathSegments: [], background: img13 },
+  {
+    title: "I said tell her",
+    pathSegments: [],
+    background: { src: img13, size: [1200, 807] },
+  },
 ];
-
-export const usePreloadSteps = () => {
-  useEffect(() => {
-    const preloadLinks = steps
-      .filter((step) => !!step.background)
-      .map((step) => {
-        const el = document.createElement("link");
-        el.rel = "preload";
-        el.href = step.background!;
-        el.as = "image";
-        el.classList.add("uncolouring-book-preload");
-        return el;
-      });
-
-    document.head.append(...preloadLinks);
-
-    return () => {
-      document.head
-        .querySelectorAll(".uncolouring-book-preload")
-        .forEach((el) => el.remove());
-    };
-  }, []);
-};

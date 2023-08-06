@@ -1,14 +1,14 @@
 import { useComputed, useSignal } from "@preact/signals";
 import c from "classnames";
+import { useState } from "preact/hooks";
 import styles from "./app.module.css";
 import { useCanvasStore } from "./canvas-store";
 import { Button } from "./components/button";
 import { Canvas } from "./components/canvas";
+import { ColorPicker } from "./components/color-picker";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
-import { ColorPicker } from "./components/color-picker";
-import { usePreloadSteps } from "./steps";
-import { useState } from "preact/hooks";
+import { usePreloadSteps } from "./use-preload-steps";
 
 export function App() {
   usePlomk();

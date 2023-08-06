@@ -1,47 +1,22 @@
-import { useComputed, useSignal, useSignalEffect } from "@preact/signals";
+import { useComputed } from "@preact/signals";
 import type { Signal } from "@preact/signals-core";
 import { getStroke } from "perfect-freehand";
 import { VNode } from "preact";
-import { useEffect, useMemo, useRef } from "preact/hooks";
+import { useRef } from "preact/hooks";
+import type { StepBackground } from "../domain";
 import { PathSegment } from "../domain";
 import styles from "./canvas.module.css";
 import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
+import { useScaleFactor } from "./use-scale-factor";
 import { useScreenSize } from "./use-screen-size";
 
 type Props = {
   title: string | VNode | VNode[];
   color: string;
   strokeWidth: number;
-  background?: string;
+  background?: StepBackground;
   output: Signal<PathSegment[]>;
   stepIndex: number;
-};
-
-const useScaleFactor = (
-  srcWidth: number,
-  srcHeight: number,
-  baseScaleFactor = 1
-) => {
-  const scaleFactor = useSignal(baseScaleFactor);
-
-  useEffect(() => {
-    const onResize = () => {
-      scaleFactor.value = Math.min(
-        window.innerWidth / srcWidth,
-        window.innerHeight / srcHeight
-      );
-    };
-
-    addEventListener("resize", onResize);
-    const timer = setTimeout(onResize, 0);
-
-    return () => {
-      removeEventListener("resize", onResize);
-      clearTimeout(timer);
-    };
-  }, [srcWidth, srcHeight]);
-
-  return scaleFactor;
 };
 
 export const Canvas = ({
@@ -102,17 +77,15 @@ export const Canvas = ({
   const canvasElement = useRef<SVGSVGElement>(null);
   const canvasOffsets = useScreenSize(canvasElement);
 
-  const bgWidth = 2480;
-  const bgHeight = 3508;
-
-  const scaleFactor = useScaleFactor(bgWidth, bgHeight, 1);
+  const sizes = background?.size || [1, 1];
+  const scaleFactor = useScaleFactor(sizes[0], sizes[1], 1);
   return (
     <div class={styles.canvas}>
-      {background ? (
+      {background?.src ? (
         <div
-          key={`background_${stepIndex}_${background}`}
+          key={`background_${stepIndex}_${background.src}`}
           className={styles.background}
-          style={{ backgroundImage: `url(${background})` }}
+          style={{ backgroundImage: `url(${background.src})` }}
         />
       ) : null}
       <svg
@@ -140,24 +113,6 @@ export const Canvas = ({
           {typeof title === "string" ? <h1>{title}</h1> : title}{" "}
         </div>
       </div>
-      {/* 
-      <div
-        style={{
-          position: "absolute",
-          zIndex: 100000,
-          top: 100,
-        }}
-      >
-        <input
-          type="range"
-          min="0.9"
-          max="1.1"
-          step="0.01"
-          value={scaleFactor.value}
-          onInput={(e) => (scaleFactor.value = Number(e.currentTarget.value))}
-        />
-        {scaleFactor}
-      </div> */}
     </div>
   );
 };

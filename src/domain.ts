@@ -8,10 +8,15 @@ export type PathSegment = {
   originalScale: number;
 };
 
+export type StepBackground = {
+  src: string;
+  size: [number, number];
+};
+
 export type Step = {
   title: string | VNode | VNode[];
   pathSegments: PathSegment[];
-  background?: string;
+  background?: StepBackground;
 };
 
 export type WithTarget<Event, Target> = Event & { currentTarget: Target };
