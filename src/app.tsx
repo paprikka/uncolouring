@@ -100,7 +100,7 @@ export function App() {
             undo
           </Button>
           <Button size="s" onClick={() => (scratch.value = [])}>
-            CLR
+            clear
           </Button>
           <Button
             onClick={() => {
