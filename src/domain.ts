@@ -5,6 +5,7 @@ export type PathSegment = {
   points: number[][];
   color: string;
   strokeWidth: number;
+  originalScale: number;
 };
 
 export type Step = {

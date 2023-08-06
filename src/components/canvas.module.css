@@ -75,6 +75,12 @@
   translate: -50% -50%;
 }
 
+.canvas svg path {
+  scale: var(--s);
+  /* TODO: share with JS */
+  transform-origin: 5000px 5000px;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

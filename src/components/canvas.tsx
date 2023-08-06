@@ -1,8 +1,8 @@
-import { useComputed } from "@preact/signals";
+import { useComputed, useSignal, useSignalEffect } from "@preact/signals";
 import type { Signal } from "@preact/signals-core";
 import { getStroke } from "perfect-freehand";
 import { VNode } from "preact";
-import { useRef } from "preact/hooks";
+import { useEffect, useMemo, useRef } from "preact/hooks";
 import { PathSegment } from "../domain";
 import styles from "./canvas.module.css";
 import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
@@ -15,6 +15,33 @@ type Props = {
   background?: string;
   output: Signal<PathSegment[]>;
   stepIndex: number;
+};
+
+const useScaleFactor = (
+  srcWidth: number,
+  srcHeight: number,
+  baseScaleFactor = 1
+) => {
+  const scaleFactor = useSignal(baseScaleFactor);
+
+  useEffect(() => {
+    const onResize = () => {
+      scaleFactor.value = Math.min(
+        window.innerWidth / srcWidth,
+        window.innerHeight / srcHeight
+      );
+    };
+
+    addEventListener("resize", onResize);
+    const timer = setTimeout(onResize, 0);
+
+    return () => {
+      removeEventListener("resize", onResize);
+      clearTimeout(timer);
+    };
+  }, [srcWidth, srcHeight]);
+
+  return scaleFactor;
 };
 
 export const Canvas = ({
@@ -36,6 +63,7 @@ export const Canvas = ({
         color: color,
         points: [[e.clientX - offsetX, e.clientY - offsetY]],
         strokeWidth: strokeWidth,
+        originalScale: scaleFactor.value,
       },
     ];
   };
@@ -74,6 +102,10 @@ export const Canvas = ({
   const canvasElement = useRef<SVGSVGElement>(null);
   const canvasOffsets = useScreenSize(canvasElement);
 
+  const bgWidth = 2480;
+  const bgHeight = 3508;
+
+  const scaleFactor = useScaleFactor(bgWidth, bgHeight, 1);
   return (
     <div class={styles.canvas}>
       {background ? (
@@ -95,15 +127,37 @@ export const Canvas = ({
         {allSVGPaths.value
           .filter((svgPath) => svgPath.segment.points.length)
           .map(({ segment, path }) => (
-            <path key={segment.id} d={path} fill={segment.color} />
+            <path
+              key={segment.id}
+              d={path}
+              fill={segment.color}
+              style={`--s: ${scaleFactor.value / segment.originalScale};`}
+            />
           ))}
       </svg>
-
       <div class={styles.title} key={`title_${stepIndex}_${background}`}>
         <div class={styles.titleContent}>
           {typeof title === "string" ? <h1>{title}</h1> : title}{" "}
         </div>
       </div>
+      {/* 
+      <div
+        style={{
+          position: "absolute",
+          zIndex: 100000,
+          top: 100,
+        }}
+      >
+        <input
+          type="range"
+          min="0.9"
+          max="1.1"
+          step="0.01"
+          value={scaleFactor.value}
+          onInput={(e) => (scaleFactor.value = Number(e.currentTarget.value))}
+        />
+        {scaleFactor}
+      </div> */}
     </div>
   );
 };
