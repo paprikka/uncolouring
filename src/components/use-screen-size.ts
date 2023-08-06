@@ -10,7 +10,11 @@ export const useScreenSize = () => {
 
     addEventListener("resize", onResize);
 
+    // iPad fix/hack
+    const timer = setTimeout(onResize, 0);
+
     return () => {
+      clearTimeout(timer);
       removeEventListener("resize", onResize);
     };
   }, []);
