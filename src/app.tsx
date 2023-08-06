@@ -8,11 +8,12 @@ import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 import { ColorPicker } from "./components/color-picker";
 import { usePreloadSteps } from "./steps";
+import { useState } from "preact/hooks";
 
-const canvasStore = useCanvasStore();
 export function App() {
   usePlomk();
   usePreloadSteps();
+  const [canvasStore] = useState(useCanvasStore);
   const previewVisible = useSignal(false);
   const { isFirst, isLast, currentStepIndex, strokeWidth, color, allSteps } =
     canvasStore;
