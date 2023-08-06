@@ -10,20 +10,49 @@
   height: 3rem;
   border: none;
 
+  padding: 0.2rem;
+
+  position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
+.input::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  border-radius: 100rem;
+  overflow: hidden;
+  background-image: conic-gradient(
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet,
+    red
+  );
+}
+
 .input::-webkit-color-swatch-wrapper {
+  appearance: none;
   padding: 0;
 }
 .input::-moz-color-swatch-wrapper {
+  appearance: none;
   padding: 0;
 }
 
 .input::-webkit-color-swatch {
+  appearance: none;
   border-radius: 100rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .input::-moz-color-swatch {
+  appearance: none;
   border-radius: 100rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
