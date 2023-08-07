@@ -3,29 +3,32 @@ import type { Signal } from "@preact/signals-core";
 import { getStroke } from "perfect-freehand";
 import { VNode } from "preact";
 import { useRef } from "preact/hooks";
-import type { StepBackground } from "../domain";
+import type { PathSegmentRecording, StepBackground } from "../domain";
 import { PathSegment } from "../domain";
 import styles from "./canvas.module.css";
 import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
 import { useScaleFactor } from "./use-scale-factor";
 import { useScreenSize } from "./use-screen-size";
+import { useRecording } from "./use-recording";
 
 type Props = {
-  title: string | VNode | VNode[];
-  color: string;
-  strokeWidth: number;
   background?: StepBackground;
+  color: string;
   output: Signal<PathSegment[]>;
+  recording?: PathSegmentRecording;
   stepIndex: number;
+  strokeWidth: number;
+  title: string | VNode | VNode[];
 };
 
 export const Canvas = ({
-  title,
+  background,
   color,
   output,
-  strokeWidth,
-  background,
+  recording,
   stepIndex,
+  strokeWidth,
+  title,
 }: Props) => {
   const onDown = (e: PointerEvent) => {
     (e.target as SVGElement).setPointerCapture(e.pointerId);
@@ -79,8 +82,11 @@ export const Canvas = ({
 
   const sizes = background?.size || [1, 1];
   const scaleFactor = useScaleFactor(sizes[0], sizes[1], 1);
+  const isRecordingActive = useRecording(stepIndex, output, recording);
+
   return (
     <div class={styles.canvas}>
+      {isRecordingActive.value ? <div class={styles.overlay} /> : null}
       {background?.src ? (
         <div
           key={`background_${stepIndex}_${background.src}`}

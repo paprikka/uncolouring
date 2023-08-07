@@ -89,3 +89,9 @@
     opacity: 1;
   }
 }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--layer-overlay);
+}
