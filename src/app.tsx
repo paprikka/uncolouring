@@ -15,8 +15,15 @@ export function App() {
   usePreloadSteps();
   const [canvasStore] = useState(useCanvasStore);
   const previewVisible = useSignal(false);
-  const { isFirst, isLast, currentStepIndex, strokeWidth, color, allSteps } =
-    canvasStore;
+  const {
+    isFirst,
+    isLast,
+    currentStepIndex,
+    strokeWidth,
+    color,
+    allSteps,
+    takeScreenshot,
+  } = canvasStore;
   const currentBackground = useComputed(
     () => allSteps.value[currentStepIndex.value].background
   );
@@ -57,6 +64,7 @@ export function App() {
         title={currentTitle.value}
         background={currentBackground.value}
         stepIndex={currentStepIndex.value}
+        takeScreenshot={takeScreenshot}
       />
 
       <div
@@ -102,10 +110,18 @@ export function App() {
           <Button
             size="s"
             disabled={scratch.value.length === 0}
+            onClick={() => takeScreenshot.value && takeScreenshot.value()}
+          >
+            💾
+          </Button>
+          <Button
+            size="s"
+            disabled={scratch.value.length === 0}
             onClick={() => (scratch.value = [])}
           >
             clear
           </Button>
+
           <Button
             onClick={() => {
               if (isLast.value) return gotoStepIndex(3);

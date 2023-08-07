@@ -6,11 +6,20 @@ export const useCanvasStore = () => {
   const strokeWidth = signal(10);
   const currentStepIndex = signal(0);
   const allSteps = signal(steps);
+  const takeScreenshot = signal<(() => void) | null>(null);
 
   const isLast = computed(() => currentStepIndex.value === steps.length - 1);
   const isFirst = computed(() => currentStepIndex.value === 0);
 
-  return { color, strokeWidth, allSteps, currentStepIndex, isLast, isFirst };
+  return {
+    color,
+    strokeWidth,
+    allSteps,
+    currentStepIndex,
+    isLast,
+    isFirst,
+    takeScreenshot,
+  };
 };
 
 export type CanvasStore = ReturnType<typeof useCanvasStore>;

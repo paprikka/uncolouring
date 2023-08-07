@@ -8,6 +8,7 @@
   touch-action: none;
   z-index: var(--layer-canvas);
   overflow: hidden;
+  background: var(--color-bg);
 }
 
 .title {
