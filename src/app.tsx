@@ -1,4 +1,4 @@
-import { useComputed, useSignal } from "@preact/signals";
+import { useComputed, useSignal, useSignalEffect } from "@preact/signals";
 import c from "classnames";
 import { useState } from "preact/hooks";
 import styles from "./app.module.css";
@@ -9,6 +9,29 @@ import { ColorPicker } from "./components/color-picker";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 import { usePreloadSteps } from "./use-preload-steps";
+
+const OhNo = () => {
+  const isSelected = useSignal(false);
+  useSignalEffect(() => {
+    if (isSelected.value) setTimeout(() => (isSelected.value = false), 600);
+  });
+
+  return (
+    <main class={styles.ohNo}>
+      <label htmlFor="#remember-me">
+        <input
+          type="checkbox"
+          id="remember-me"
+          checked={isSelected.value}
+          onInput={() => {
+            isSelected.value = true;
+          }}
+        />
+        <span>Remember me</span>
+      </label>
+    </main>
+  );
+};
 
 export function App() {
   usePlomk();
@@ -43,6 +66,9 @@ export function App() {
     scratch.value = allSteps.value[index].pathSegments;
   };
 
+  const isNo = useSignal(false);
+
+  if (isNo.value) return <OhNo />;
   return (
     <main class={styles.app}>
       <header>
@@ -108,7 +134,10 @@ export function App() {
           </Button>
           <Button
             onClick={() => {
-              if (isLast.value) return gotoStepIndex(3);
+              if (isLast.value) {
+                isNo.value = true;
+                return;
+              }
               gotoStepIndex(currentStepIndex.value + 1);
             }}
           >
