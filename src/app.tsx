@@ -10,6 +10,7 @@ import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 import { usePreloadSteps } from "./use-preload-steps";
 import { OhNo } from "./components/ohno";
+import { Header } from "./components/header";
 
 export function App() {
   usePlomk();
@@ -49,11 +50,7 @@ export function App() {
 
   return (
     <main class={styles.app}>
-      <header>
-        <a href="https://sonnet.io/" target="_blank">
-          🐐
-        </a>
-      </header>
+      <Header />
       <Canvas
         color={color.value}
         strokeWidth={strokeWidth.value}

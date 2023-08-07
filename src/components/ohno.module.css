@@ -3,12 +3,11 @@
   inset: 1rem;
   display: grid;
   place-items: center;
-  font-size: 1.5rem;
 }
 
 .ohNo label {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.1rem;
   align-items: center;
   cursor: pointer;
   user-select: none;
@@ -20,8 +19,4 @@
   }
 }
 .ohNo input[type="checkbox"] {
-  font-size: 1.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  vertical-align: baseline;
 }
