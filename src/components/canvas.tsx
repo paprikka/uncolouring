@@ -1,35 +1,42 @@
-import { useComputed } from "@preact/signals";
+import { useComputed, useSignal, useSignalEffect } from "@preact/signals";
 import type { Signal } from "@preact/signals-core";
 import { getStroke } from "perfect-freehand";
 import { VNode } from "preact";
-import { useRef } from "preact/hooks";
-import type { StepBackground } from "../domain";
+import { useEffect, useRef } from "preact/hooks";
+import type { PathSegmentRecording, StepBackground } from "../domain";
 import { PathSegment } from "../domain";
 import styles from "./canvas.module.css";
 import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
 import { useScaleFactor } from "./use-scale-factor";
 import { useScreenSize } from "./use-screen-size";
+import { useRecording } from "./use-recording";
 
 type Props = {
-  title: string | VNode | VNode[];
-  color: string;
-  strokeWidth: number;
   background?: StepBackground;
+  color: string;
   output: Signal<PathSegment[]>;
+  recording?: PathSegmentRecording;
   stepIndex: number;
+  strokeWidth: number;
+  title: string | VNode | VNode[];
 };
 
 export const Canvas = ({
-  title,
+  background,
   color,
   output,
-  strokeWidth,
-  background,
+  recording,
   stepIndex,
+  strokeWidth,
+  title,
 }: Props) => {
+  useEffect(() => {
+    timestamps.value = [];
+  }, [background]);
   const onDown = (e: PointerEvent) => {
     (e.target as SVGElement).setPointerCapture(e.pointerId);
 
+    timestamps.value = [...timestamps.value, [Date.now()]];
     const { offsetX, offsetY } = canvasOffsets.value;
     output.value = [
       ...output.value,
@@ -42,6 +49,19 @@ export const Canvas = ({
       },
     ];
   };
+
+  const withTimestamps = useComputed(() => {
+    return {
+      pathSegments: output.value,
+      timestamps: timestamps.value,
+    };
+  });
+
+  useSignalEffect(() => {
+    (window as unknown as any).timestamps = withTimestamps.value;
+  });
+
+  const timestamps = useSignal<number[][]>([]);
 
   const onMove = (e: PointerEvent) => {
     if (e.buttons !== 1) return;
@@ -56,6 +76,12 @@ export const Canvas = ({
       [e.clientX - offsetX, e.clientY - offsetY],
     ];
     output.value = [...output.value.slice(0, -1), lastSegment];
+
+    const lastTimestamp = timestamps.value[timestamps.value.length - 1];
+    timestamps.value = [
+      ...timestamps.value.slice(0, -1),
+      [...lastTimestamp, Date.now()],
+    ];
   };
 
   const allSVGPaths = useComputed(() => {
@@ -79,6 +105,9 @@ export const Canvas = ({
 
   const sizes = background?.size || [1, 1];
   const scaleFactor = useScaleFactor(sizes[0], sizes[1], 1);
+
+  useRecording(stepIndex, output, recording);
+
   return (
     <div class={styles.canvas}>
       {background?.src ? (

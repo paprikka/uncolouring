@@ -13,10 +13,17 @@ export type StepBackground = {
   size: [number, number];
 };
 
+export type PathSegmentRecording = {
+  pathSegments: PathSegment[];
+  timestamps: number[][];
+  timeScale?: number;
+};
+
 export type Step = {
   title: string | VNode | VNode[];
   pathSegments: PathSegment[];
   background?: StepBackground;
+  recording?: PathSegmentRecording;
 };
 
 export type WithTarget<Event, Target> = Event & { currentTarget: Target };

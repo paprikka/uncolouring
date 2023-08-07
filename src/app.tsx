@@ -1,4 +1,4 @@
-import { useComputed, useSignal, useSignalEffect } from "@preact/signals";
+import { useComputed, useSignal } from "@preact/signals";
 import c from "classnames";
 import { useState } from "preact/hooks";
 import styles from "./app.module.css";
@@ -6,11 +6,11 @@ import { useCanvasStore } from "./canvas-store";
 import { Button } from "./components/button";
 import { Canvas } from "./components/canvas";
 import { ColorPicker } from "./components/color-picker";
+import { Header } from "./components/header";
+import { OhNo } from "./components/ohno";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 import { usePreloadSteps } from "./use-preload-steps";
-import { OhNo } from "./components/ohno";
-import { Header } from "./components/header";
 
 export function App() {
   usePlomk();
@@ -25,7 +25,12 @@ export function App() {
   const currentTitle = useComputed(
     () => allSteps.value[currentStepIndex.value].title
   );
-  const scratch = useSignal<PathSegment[]>([]);
+  const currentRecording = useComputed(
+    () => allSteps.value[currentStepIndex.value].recording
+  );
+  const scratch = useSignal<PathSegment[]>(
+    allSteps.value[currentStepIndex.value].pathSegments
+  );
 
   const gotoStepIndex = (index: number) => {
     if (index < 0 || index > allSteps.value.length - 1) return;
@@ -58,6 +63,7 @@ export function App() {
         title={currentTitle.value}
         background={currentBackground.value}
         stepIndex={currentStepIndex.value}
+        recording={currentRecording.value}
       />
 
       <div
