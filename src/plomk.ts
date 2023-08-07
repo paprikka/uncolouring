@@ -71,8 +71,8 @@ export const usePlomk = () => {
       const target = e.target as HTMLElement;
       if (!target) return;
       const isPlomkable =
-        target.matches("a, button, select") ||
-        target.closest("a, button, select");
+        target.matches("a, button, select, input, label") ||
+        target.closest("a, button, select, input, label");
 
       if (!isPlomkable) return;
 
