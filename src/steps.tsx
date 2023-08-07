@@ -12,7 +12,7 @@ import img7 from "./assets/img_7.webp";
 import img8 from "./assets/img_8.webp";
 import img9 from "./assets/img_9.webp";
 import img13 from "./assets/last.jpeg";
-import img12 from "./assets/mother.png";
+import img12 from "./assets/mother.webp";
 import img11 from "./assets/not-mother.jpeg";
 
 export const steps: Step[] = [
@@ -1096,7 +1096,7 @@ export const steps: Step[] = [
     },
   },
   {
-    title: "Sun",
+    title: "Sun?",
     pathSegments: [],
     background: {
       src: img3,
@@ -1104,7 +1104,7 @@ export const steps: Step[] = [
     },
   },
   {
-    title: "Banana",
+    title: "Banana?",
     pathSegments: [],
     background: {
       src: img4,
@@ -1120,7 +1120,7 @@ export const steps: Step[] = [
     },
   },
   {
-    title: "pickle",
+    title: "pickle?",
     pathSegments: [],
     background: {
       src: img6,
