@@ -1,4 +1,4 @@
-import { useComputed, useSignal } from "@preact/signals";
+import { useComputed, useSignal, useSignalEffect } from "@preact/signals";
 import c from "classnames";
 import { useState } from "preact/hooks";
 import styles from "./app.module.css";
@@ -11,6 +11,7 @@ import { OhNo } from "./components/ohno";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 import { usePreloadSteps } from "./use-preload-steps";
+import { track } from "./track";
 
 export function App() {
   usePlomk();
@@ -49,6 +50,10 @@ export function App() {
     // load new scratch
     scratch.value = allSteps.value[index].pathSegments;
   };
+
+  useSignalEffect(() => {
+    track(`step:${currentStepIndex.value}`);
+  });
 
   const isNo = useSignal(false);
   if (isNo.value) return <OhNo />;
