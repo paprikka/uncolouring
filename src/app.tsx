@@ -9,29 +9,7 @@ import { ColorPicker } from "./components/color-picker";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 import { usePreloadSteps } from "./use-preload-steps";
-
-const OhNo = () => {
-  const isSelected = useSignal(false);
-  useSignalEffect(() => {
-    if (isSelected.value) setTimeout(() => (isSelected.value = false), 600);
-  });
-
-  return (
-    <main class={styles.ohNo}>
-      <label htmlFor="#remember-me">
-        <input
-          type="checkbox"
-          id="remember-me"
-          checked={isSelected.value}
-          onInput={() => {
-            isSelected.value = true;
-          }}
-        />
-        <span>Remember me</span>
-      </label>
-    </main>
-  );
-};
+import { OhNo } from "./components/ohno";
 
 export function App() {
   usePlomk();
@@ -67,8 +45,8 @@ export function App() {
   };
 
   const isNo = useSignal(false);
-
   if (isNo.value) return <OhNo />;
+
   return (
     <main class={styles.app}>
       <header>
