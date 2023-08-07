@@ -10,6 +10,7 @@ import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
 import { useScaleFactor } from "./use-scale-factor";
 import { useScreenSize } from "./use-screen-size";
 import { useRecording } from "./use-recording";
+import c from "classnames";
 
 type Props = {
   background?: StepBackground;
@@ -85,7 +86,12 @@ export const Canvas = ({
   const isRecordingActive = useRecording(stepIndex, output, recording);
 
   return (
-    <div class={styles.canvas}>
+    <div
+      class={c({
+        [styles.canvas]: true,
+        [styles.isRecording]: isRecordingActive.value,
+      })}
+    >
       {isRecordingActive.value ? <div class={styles.overlay} /> : null}
       {background?.src ? (
         <div

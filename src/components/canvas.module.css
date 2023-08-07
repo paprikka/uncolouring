@@ -90,8 +90,13 @@
   }
 }
 
-.overlay {
+.canvas.isRecording {
+  z-index: var(--layer-overlay);
+}
+.canvas.isRecording::after {
   position: absolute;
   inset: 0;
+  content: "";
   z-index: var(--layer-overlay);
+  background: rgba(0, 0, 0, 0.5);
 }
