@@ -9,9 +9,14 @@ export const useRecording = (
   recording?: PathSegmentRecording
 ) => {
   const isActive = useSignal(false);
+  const playedRecordings = useSignal<Set<PathSegmentRecording>>(new Set());
 
   useEffect(() => {
     if (!recording) return;
+    if (playedRecordings.value.has(recording)) {
+      console.log("already played");
+      return;
+    }
 
     let rafID: number | null = null;
     const rafPromise = () =>
@@ -70,6 +75,7 @@ export const useRecording = (
       }
 
       isActive.value = false;
+      playedRecordings.value.add(recording);
     };
 
     console.log("run");
@@ -77,6 +83,7 @@ export const useRecording = (
 
     return () => {
       if (!rafID) return;
+      isActive.value = false;
       cancelAnimationFrame(rafID);
     };
   }, [stepIndex, recording]);
