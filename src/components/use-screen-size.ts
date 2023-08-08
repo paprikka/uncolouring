@@ -21,10 +21,10 @@ export const useScreenSize = (element: Ref<SVGSVGElement>) => {
     addEventListener("resize", onResize);
 
     // iPad fix/hack
-    const timer = setTimeout(onResize, 0);
+    const timer = setInterval(onResize, 1000);
 
     return () => {
-      clearTimeout(timer);
+      clearInterval(timer);
       removeEventListener("resize", onResize);
     };
   }, []);
