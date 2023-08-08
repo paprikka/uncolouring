@@ -1,14 +1,15 @@
-import { Signal } from "@preact/signals-core";
+import { Signal, signal } from "@preact/signals-core";
 import { useEffect } from "preact/hooks";
 import { PathSegment, PathSegmentRecording } from "../domain";
 import { useSignal } from "@preact/signals";
+
+export const isActive = signal(false);
 
 export const useRecording = (
   stepIndex: number,
   output: Signal<PathSegment[]>,
   recording?: PathSegmentRecording
 ) => {
-  const isActive = useSignal(false);
   const playedRecordings = useSignal<Set<PathSegmentRecording>>(new Set());
 
   useEffect(() => {
@@ -87,6 +88,4 @@ export const useRecording = (
       cancelAnimationFrame(rafID);
     };
   }, [stepIndex, recording]);
-
-  return isActive;
 };

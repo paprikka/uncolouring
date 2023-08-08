@@ -96,3 +96,10 @@
   background: var(--color-text);
   cursor: pointer;
 }
+
+.uiOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--layer-overlay);
+  pointer-events: none;
+}

@@ -89,14 +89,3 @@
     opacity: 1;
   }
 }
-
-.canvas.isRecording {
-  z-index: var(--layer-overlay);
-}
-/* Solving architecture problems with CSS 👍  */
-.canvas.isRecording::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  z-index: var(--layer-overlay);
-}

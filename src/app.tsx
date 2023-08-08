@@ -10,8 +10,10 @@ import { Header } from "./components/header";
 import { OhNo } from "./components/ohno";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
-import { usePreloadSteps } from "./use-preload-steps";
 import { track } from "./track";
+import { usePreloadSteps } from "./use-preload-steps";
+
+import { isActive as isActivelyRecording } from "./components/use-recording";
 
 export function App() {
   usePlomk();
@@ -55,11 +57,13 @@ export function App() {
     track(`step:${currentStepIndex.value}`);
   });
 
+  const isUIEnabled = !isActivelyRecording.value;
   const isNo = useSignal(false);
   if (isNo.value) return <OhNo />;
 
   return (
     <main class={styles.app}>
+      {isActivelyRecording.value ? <div class={styles.uiOverlay} /> : null}
       <Header />
       <Canvas
         color={color.value}
@@ -80,9 +84,10 @@ export function App() {
       />
 
       <div class={styles.canvasTools}>
-        <ColorPicker value={color} />
+        <ColorPicker value={color} disabled={!isUIEnabled} />
         <label>
           <input
+            disabled={!isUIEnabled}
             type="range"
             min="5"
             max="70"
@@ -99,26 +104,27 @@ export function App() {
       <footer>
         <nav>
           <Button
-            disabled={isFirst.value}
+            disabled={isFirst.value || !isUIEnabled}
             onClick={() => gotoStepIndex(currentStepIndex.value - 1)}
           >
             👈
           </Button>
           <Button
             size="s"
-            disabled={scratch.value.length === 0}
+            disabled={scratch.value.length === 0 || !isUIEnabled}
             onClick={() => (scratch.value = scratch.value.slice(0, -1))}
           >
             undo
           </Button>
           <Button
             size="s"
-            disabled={scratch.value.length === 0}
+            disabled={scratch.value.length === 0 || !isUIEnabled}
             onClick={() => (scratch.value = [])}
           >
             clear
           </Button>
           <Button
+            disabled={!isUIEnabled}
             onClick={() => {
               if (isLast.value) {
                 isNo.value = true;

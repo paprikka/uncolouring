@@ -7,10 +7,9 @@ import type { PathSegmentRecording, StepBackground } from "../domain";
 import { PathSegment } from "../domain";
 import styles from "./canvas.module.css";
 import { getSvgPathFromStroke } from "./get-svg-path-from-stroke";
+import { useRecording } from "./use-recording";
 import { useScaleFactor } from "./use-scale-factor";
 import { useScreenSize } from "./use-screen-size";
-import { useRecording } from "./use-recording";
-import c from "classnames";
 
 type Props = {
   background?: StepBackground;
@@ -83,16 +82,10 @@ export const Canvas = ({
 
   const sizes = background?.size || [1, 1];
   const scaleFactor = useScaleFactor(sizes[0], sizes[1], 1);
-  const isRecordingActive = useRecording(stepIndex, output, recording);
+  useRecording(stepIndex, output, recording);
 
   return (
-    <div
-      class={c({
-        [styles.canvas]: true,
-        [styles.isRecording]: isRecordingActive.value,
-      })}
-    >
-      {isRecordingActive.value ? <div class={styles.overlay} /> : null}
+    <div class={styles.canvas}>
       {background?.src ? (
         <div
           key={`background_${stepIndex}_${background.src}`}
