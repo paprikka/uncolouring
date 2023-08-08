@@ -37,8 +37,8 @@ export const steps: Step[] = [
           <li>Add strokes to shapes to give them meaning.</li>
           <li>You can draw with your fingers or mouse.</li>
           <li>
-            Don't worry about skipping pictures. Hit 👉🏼 to find the one you
-            like!
+            Don't worry about skipping pictures, <strong>explore</strong>. Hit
+            👉🏼 to find the one you like!
           </li>
           <li>...and most importantly...</li>
         </ol>
