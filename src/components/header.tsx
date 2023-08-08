@@ -6,8 +6,9 @@ export const Header = () => (
       href="https://sonnet.io/"
       target="_blank"
       data-umami-event="click:sonnet.io-link"
+      class={styles.withGoat}
     >
-      🐐
+      <span>about</span>
     </a>
   </header>
 );

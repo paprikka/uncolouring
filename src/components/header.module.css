@@ -10,24 +10,33 @@
   align-items: center;
 }
 
-.header h1 {
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: start;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
+.header .withGoat::before {
+  content: "🐐";
 }
 
 .header a {
-  font-size: 1.5rem;
+  font-size: 0.8rem;
   text-decoration: none;
+  color: var(--color-text);
+  font-family: monospace;
+}
+
+@media (min-width: 500px) {
+  .header a {
+    font-size: 1.25rem;
+  }
+}
+
+.header a span {
+  text-decoration: underline;
+  padding-inline-start: 0.5rem;
 }
 
 @media (hover: hover) {
-  .header a:hover {
+  .header .withGoat:hover::before {
     text-decoration: underline;
     text-decoration-thickness: 0.5rem;
     text-decoration-color: green;
+    text-underline-offset: -0.07em;
   }
 }
