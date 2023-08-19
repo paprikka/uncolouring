@@ -12,7 +12,7 @@ import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
 import { track } from "./track";
 import { usePreloadSteps } from "./use-preload-steps";
-
+import { takeScreenshot } from "./screenshot";
 import { isActive as isActivelyRecording } from "./components/use-recording";
 
 export function App() {
@@ -116,6 +116,13 @@ export function App() {
           >
             undo
           </Button>
+          <Button
+            size="s"
+            onClick={() => takeScreenshot(document.querySelector("svg")!)}
+          >
+            💾
+          </Button>
+
           <Button
             size="s"
             disabled={scratch.value.length === 0 || !isUIEnabled}

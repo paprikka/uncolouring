@@ -86,13 +86,6 @@ export const Canvas = ({
 
   return (
     <div class={styles.canvas}>
-      {background?.src ? (
-        <div
-          key={`background_${stepIndex}_${background.src}`}
-          className={styles.background}
-          style={{ backgroundImage: `url(${background.src})` }}
-        />
-      ) : null}
       <svg
         ref={canvasElement}
         width={canvasWidth}
@@ -102,6 +95,15 @@ export const Canvas = ({
         xmlns="http://www.w3.org/2000/svg"
         key={`canvas_${stepIndex}_${background}`}
       >
+        {background?.src ? (
+          <image
+            x={(canvasWidth - background.size[0] * scaleFactor.value) / 2}
+            y={(canvasHeight - background.size[1] * scaleFactor.value) / 2}
+            width={background.size[0] * scaleFactor.value}
+            height={background.size[1] * scaleFactor.value}
+            xlinkHref={background.src}
+          />
+        ) : null}
         {allSVGPaths.value
           .filter((svgPath) => svgPath.segment.points.length)
           .map(({ segment, path }) => (
@@ -109,7 +111,9 @@ export const Canvas = ({
               key={segment.id}
               d={path}
               fill={segment.color}
-              style={`--s: ${scaleFactor.value / segment.originalScale};`}
+              // * CSS transforms via @style will be ignored on export
+              transform={`scale(${scaleFactor.value / segment.originalScale})`}
+              transform-origin="center"
             />
           ))}
       </svg>
