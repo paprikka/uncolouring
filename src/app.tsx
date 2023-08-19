@@ -61,7 +61,11 @@ export function App() {
   const screenshotStatus = useSignal<"idle" | "pending">("idle");
   const handleTakeScreenshot = async () => {
     screenshotStatus.value = "pending";
-    await takeScreenshot(document.querySelector("svg")!).catch();
+    track("screenshot:start");
+
+    await takeScreenshot(document.querySelector("svg")!)
+      .then(() => track("screenshot:success"))
+      .catch(() => track("screenshot:error"));
 
     screenshotStatus.value = "idle";
   };
