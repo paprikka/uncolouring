@@ -90,7 +90,7 @@ export function App() {
           <input
             disabled={!isUIEnabled}
             type="range"
-            min="5"
+            min="3"
             max="70"
             value={strokeWidth.value}
             onPointerDown={() => (previewVisible.value = true)}
