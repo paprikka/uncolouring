@@ -12,13 +12,19 @@
   cursor: pointer;
 }
 
+@media (hover: hover) {
+  .button:hover {
+    scale: 1.1;
+  }
+}
+
 .button:disabled {
   opacity: 0.3;
   pointer-events: none;
 }
 
 .button:active {
-  scale: 1.1;
+  scale: 0.91;
 }
 
 .sizeSmall {
