@@ -89,7 +89,8 @@
 
 .app input[type="range"] {
   appearance: none;
-  height: 1rem;
+  background: transparent;
+  height: 2rem;
 
   --range-track-color: var(--color-text);
 }
