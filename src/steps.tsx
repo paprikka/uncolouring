@@ -14,13 +14,25 @@ import img9 from "./assets/img_9.webp";
 import img13 from "./assets/last.jpeg";
 import img12 from "./assets/mother.webp";
 import img11 from "./assets/not-mother.jpeg";
+import { Icons } from "./components/icons";
+
+const nextButton = (
+  <img
+    style={{
+      width: "1.5em",
+      verticalAlign: "middle",
+    }}
+    src={Icons.next}
+    alt="next"
+  />
+);
 
 export const steps: Step[] = [
   {
     title: (
       <>
         <h1>Hi, this is the Uncolouring Book!</h1>
-        <p>(tap 👉🏼 to continue )</p>
+        <p>(tap {nextButton} to continue )</p>
       </>
     ),
     pathSegments: [],
@@ -37,8 +49,8 @@ export const steps: Step[] = [
           <li>Add strokes to shapes to give them meaning.</li>
           <li>You can draw with your fingers or mouse.</li>
           <li>
-            Don't worry about skipping pictures, <strong>explore</strong>. Hit
-            👉🏼 to find the one you like!
+            Don't worry about skipping pictures, <strong>explore</strong>. Hit{" "}
+            {nextButton} to find the one you like!
           </li>
           <li>...and most importantly...</li>
         </ol>

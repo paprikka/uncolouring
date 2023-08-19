@@ -3,17 +3,18 @@ import c from "classnames";
 import { useState } from "preact/hooks";
 import styles from "./app.module.css";
 import { useCanvasStore } from "./canvas-store";
-import { Button } from "./components/button";
 import { Canvas } from "./components/canvas";
 import { ColorPicker } from "./components/color-picker";
 import { Header } from "./components/header";
+import { Icons } from "./components/icons";
+import { ImageButton } from "./components/image-button";
 import { OhNo } from "./components/ohno";
+import { isActive as isActivelyRecording } from "./components/use-recording";
 import { PathSegment, Step } from "./domain";
 import { usePlomk } from "./plomk";
+import { takeScreenshot } from "./screenshot";
 import { track } from "./track";
 import { usePreloadSteps } from "./use-preload-steps";
-import { takeScreenshot } from "./screenshot";
-import { isActive as isActivelyRecording } from "./components/use-recording";
 
 export function App() {
   usePlomk();
@@ -103,34 +104,32 @@ export function App() {
       </div>
       <footer>
         <nav>
-          <Button
+          <ImageButton
             disabled={isFirst.value || !isUIEnabled}
             onClick={() => gotoStepIndex(currentStepIndex.value - 1)}
-          >
-            👈
-          </Button>
-          <Button
-            size="s"
+            imageSrc={Icons.prev}
+            label="Go back"
+          />
+
+          <ImageButton
             disabled={scratch.value.length === 0 || !isUIEnabled}
             onClick={() => (scratch.value = scratch.value.slice(0, -1))}
-          >
-            undo
-          </Button>
-          <Button
-            size="s"
+            imageSrc={Icons.undo}
+            label="Undo"
+          />
+          <ImageButton
             onClick={() => takeScreenshot(document.querySelector("svg")!)}
-          >
-            💾
-          </Button>
+            imageSrc={Icons.download}
+            label="Download"
+          />
 
-          <Button
-            size="s"
+          <ImageButton
             disabled={scratch.value.length === 0 || !isUIEnabled}
             onClick={() => (scratch.value = [])}
-          >
-            clear
-          </Button>
-          <Button
+            imageSrc={Icons.clear}
+            label="Clear canvas"
+          />
+          <ImageButton
             disabled={!isUIEnabled}
             onClick={() => {
               if (isLast.value) {
@@ -139,9 +138,9 @@ export function App() {
               }
               gotoStepIndex(currentStepIndex.value + 1);
             }}
-          >
-            👉🏼
-          </Button>
+            imageSrc={Icons.next}
+            label="Go forward"
+          />
         </nav>
       </footer>
     </main>
