@@ -149,3 +149,28 @@ input[type="range"]::-moz-range-track {
   z-index: var(--layer-overlay);
   pointer-events: none;
 }
+
+.toast {
+  display: block;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: var(--layer-overlay);
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: 0.35em 0.5em;
+  line-height: 1;
+  border-radius: 0.5rem;
+
+  visibility: visible;
+  opacity: 1;
+
+  transition: 0.2s;
+}
+
+.toast[hidden] {
+  opacity: 0;
+  visibility: hidden;
+  display: block;
+  scale: 0.8;
+}

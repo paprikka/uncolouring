@@ -58,6 +58,14 @@ export function App() {
     track(`step:${currentStepIndex.value}`);
   });
 
+  const screenshotStatus = useSignal<"idle" | "pending">("idle");
+  const handleTakeScreenshot = async () => {
+    screenshotStatus.value = "pending";
+    await takeScreenshot(document.querySelector("svg")!).catch();
+
+    screenshotStatus.value = "idle";
+  };
+
   const isUIEnabled = !isActivelyRecording.value;
   const isNo = useSignal(false);
   if (isNo.value) return <OhNo />;
@@ -118,9 +126,10 @@ export function App() {
             label="Undo"
           />
           <ImageButton
-            onClick={() => takeScreenshot(document.querySelector("svg")!)}
+            onClick={handleTakeScreenshot}
             imageSrc={Icons.download}
             label="Download"
+            disabled={screenshotStatus.value === "pending" || !isUIEnabled}
           />
 
           <ImageButton
@@ -147,6 +156,10 @@ export function App() {
           />
         </nav>
       </footer>
+      {/* TODO: extract */}
+      <div className={styles.toast} hidden={screenshotStatus.value === "idle"}>
+        Saving the image...
+      </div>
     </main>
   );
 }

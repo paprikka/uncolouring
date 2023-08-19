@@ -95,7 +95,7 @@ export function svgToDataURISync(node: SVGElement) {
 
 export const takeScreenshot = async (svgElement: SVGSVGElement) => {
   console.log("Taking screenshot...");
-  svgToBlob(svgElement).then((blob) => {
+  return svgToBlob(svgElement).then((blob) => {
     if (blob) {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
