@@ -87,16 +87,62 @@
   font-weight: bold;
 }
 
+.app input[type="range"] {
+  appearance: none;
+  height: 1rem;
+
+  --range-track-color: var(--color-text);
+}
+
 .app input[type="range"]::-webkit-slider-thumb {
   appearance: none;
-  background: red;
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 100rem;
-  background: var(--color-text);
+  border: none;
+  background: var(--color-bg);
   cursor: pointer;
+  margin-block-start: -0.5rem;
+  box-shadow: 0 0 0 0.25rem var(--color-text);
 }
 
+@media (hover: hover) {
+  .app input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
+  }
+}
+
+.app input[type="range"]::-webkit-slider-runnable-track {
+  appearance: none;
+  background: var(--range-track-color);
+  height: 0.5rem;
+  border-radius: 100rem;
+}
+
+input[type="range"]::-moz-range-track {
+  appearance: none;
+  background: var(--range-track-color);
+  height: 0.5rem;
+  border-radius: 100rem;
+}
+
+.app input[type="range"]::-moz-range-thumb {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100rem;
+  border: none;
+  background: var(--color-bg);
+  cursor: pointer;
+  margin-block-start: -0.5rem;
+  box-shadow: 0 0 0 0.25rem var(--color-text);
+}
+
+@media (hover: hover) {
+  .app input[type="range"]:hover::-moz-range-thumb {
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
+  }
+}
 .uiOverlay {
   position: absolute;
   inset: 0;

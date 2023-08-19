@@ -86,6 +86,10 @@
   transform-origin: 5000px 5000px;
 }
 
+.canvas svg image {
+  pointer-events: none;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
