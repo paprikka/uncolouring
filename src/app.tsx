@@ -125,7 +125,11 @@ export function App() {
 
           <ImageButton
             disabled={scratch.value.length === 0 || !isUIEnabled}
-            onClick={() => (scratch.value = [])}
+            onClick={() => {
+              if (!confirm("Are you sure you want to clear the canvas?"))
+                return;
+              scratch.value = [];
+            }}
             imageSrc={Icons.clear}
             label="Clear canvas"
           />
