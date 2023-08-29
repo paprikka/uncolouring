@@ -46,12 +46,16 @@ export const steps: Step[] = [
       <>
         <h1>Rules of the game</h1>
         <ol>
+          <li>
+            Don't worry about skipping pictures,{" "}
+            <em>
+              <strong>explore all slides</strong>
+            </em>
+            . <br />
+            Hit {nextButton} to find the one you like!
+          </li>
           <li>Add strokes to shapes to give them meaning.</li>
           <li>You can draw with your fingers or mouse.</li>
-          <li>
-            Don't worry about skipping pictures, <strong>explore</strong>. Hit{" "}
-            {nextButton} to find the one you like!
-          </li>
           <li>...and most importantly...</li>
         </ol>
       </>
