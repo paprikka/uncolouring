@@ -1,5 +1,7 @@
 .canvas {
   position: absolute;
+  height: 100dvh;
+  width: 100dvw;
   inset: 0;
   align-self: center;
   justify-self: center;
@@ -94,6 +96,7 @@
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }

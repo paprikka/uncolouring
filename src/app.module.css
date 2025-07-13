@@ -1,3 +1,8 @@
+.app {
+  position: absolute;
+  inset: 0;
+}
+
 .app footer {
   z-index: var(--layer-nav);
 }
@@ -31,6 +36,8 @@
   padding: 1rem;
   position: absolute;
   inset: 0;
+  width: 100vw;
+  height: 100dvh;
   grid-template-columns: 1fr;
   grid-template-rows: min-content 1fr min-content;
 }
@@ -144,6 +151,7 @@ input[type="range"]::-moz-range-track {
     box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
   }
 }
+
 .uiOverlay {
   position: absolute;
   inset: 0;
